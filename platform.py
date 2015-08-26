@@ -52,6 +52,7 @@ class GameState():
         self.__gameList=[]; #should we make it a collections.deque?
         self.__gameHistory=[];
         self.__turn=0; #cada jugador fa un torn! (no una ronda sencera) (modul jugadors)
+        self.nnum=N_NUMBERS;
 
     def play(self, player, piece, end, byPass=False):
 
@@ -148,6 +149,12 @@ class GameState():
 
     def players(self):
         return [player for player in self.__players];
+
+    def gameList(self):
+        return [x for x in self.__gameList];
+
+    def gameHistory(self):
+        return [x for x in self.__gameHistory];
 
     def isEnded(self):
         for player in self.__players:

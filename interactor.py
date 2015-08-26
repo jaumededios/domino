@@ -13,5 +13,18 @@ class GameHandler():
 	def start(callback):
 		stIn=self.indexOf(self.game.starter());
 		sfp=self.__players;
-		self.__players=sfp[stIn:]+sfp[:stIn]#mirar que fincione!!
-		
+		self.__players=sfp[stIn+1:]+sfp[:stIn+1]#mirar que fincione!!
+		self.playerIndex=0;
+		self.onEnd=callback;
+		self.play()
+
+	def play():
+		player=self.__players[self.playerIndex]
+		self.__playerset[player].play(self.game.gameHistory(), 
+									  self.game.gameList(),
+									  self.game.pieceList(player),
+									  [p for p in self.__players],
+									  game.nnum,
+									  self.recieveGame)
+
+	def recieveGame():
