@@ -45,7 +45,7 @@ class GameState():
         self.__originalpieces=pieceDeck() #crear fitxes
         self.__randState=rnd.getstate(); #guardar estat del generador aleatori
         self.__pieces=[piece for piece in self.__originalpieces] #copiar el vector de peces
-        rnd.shuffle(self.__pieces);  #barrejar la còpia (nota, tot i que l'ordre sigui diferent, les peces son les mateixes (es passen per referència))
+        rnd.shuffle(self.__pieces);  #barrejar la copia (nota, tot i que l'ordre sigui diferent, les peces son les mateixes (es passen per referencia))
         self.__decks={player:[self.__pieces.pop() 
                         for piece in range(N_NUMBERS)] 
                             for player in players}; #dona a cada jugador 7 peces de les desordenades, i les treu de __pieces.
@@ -120,15 +120,16 @@ class GameState():
         n=0;
         while True:
             if not self.canDraw(player):
-                self.gameHistory.append(GameAction(action='draw', pieces=n, player=player, turn=self.__turn));
+                if n>0:
+                    self.__gameHistory.append(GameAction(action='draw', pieces=n, player=player, turn=self.__turn));
                 return True;
             if len(self.__pieces)==0:
                 return False;
             piece=self.__pieces.pop()
-            self.__decks(player).append(piece);
+            self.__decks[player].append(piece);
             n+=1;
 
-    def canDraw(player):
+    def canDraw(self,player):
         for piece in self.__decks[player]:
             for end in range(2):
                 if self.canPlay(player,piece, end):
@@ -155,6 +156,9 @@ class GameState():
 
     def gameHistory(self):
         return [x for x in self.__gameHistory];
+
+    def remainingPieces(self):
+        return len(self.__pieces)
 
     def isEnded(self):
         for player in self.__players:
