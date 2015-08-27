@@ -14,7 +14,7 @@ class GameHandler():
 
 	def restart(self):
 		self.game= platform.GameState(self.__players);
-		self.start()
+		return self.start()
 
 
 	def start(self):
