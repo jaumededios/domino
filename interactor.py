@@ -14,7 +14,7 @@ class GameHandler():
 
 	def restart(self):
 		self.game= platform.GameState(self.__players);
-		self.start()
+		return self.start()
 
 
 	def start(self):
@@ -60,7 +60,8 @@ class GameHandler():
 					game=self.game.gameList(), #partida
 					players=[p for p in self.__players], #lista de jugadores
 					nnum=self.game.nnum, #numero de piezas
-					remainingPieces=self.game.remainingPieces())
+					remainingPieces=self.game.remainingPieces(),
+					winner=a)
 			else: 
 				self.toReturn={
 					"pieces": {p:self.game.pieceList(p) for p in self.__players},
@@ -68,7 +69,8 @@ class GameHandler():
 					"game": self.game.gameList(), #partida
 					"players": [p for p in self.__players], #lista de jugadores
 					"nnum": self.game.nnum, #numero de piezas
-					"remainingPieces": self.game.remainingPieces()
+					"remainingPieces": self.game.remainingPieces(),
+					"winner":a
 				}
 			return a;
 

@@ -65,14 +65,14 @@ class GameState():
             if not empty and self.__gameList[-1].end()==piece.end():
                 piece.reverse()
             self.__gameList.append(piece);
-            self.__gameHistory.append(GameAction('play', piece, self.__turn, end)); #falta programar
+            self.__gameHistory.append(GameAction(action='play', piece=piece, turn=self.__turn, end=end));
             self.__decks[player].remove(piece);
 
         elif end == 0:
             if not empty and self.__gameList[0].start()==piece.start():
                 piece.reverse()
             self.__gameList.insert(0, piece)
-            self.__gameHistory.append(GameAction('play', piece, self.__turn, end));
+            self.__gameHistory.append(GameAction(action='play', piece=piece, turn=self.__turn, end=end));
             self.__decks[player].remove(piece);
 
 
@@ -121,7 +121,7 @@ class GameState():
         while True:
             if not self.canDraw(player):
                 if n>0:
-                    self.__gameHistory.append(GameAction(action='draw', pieces=n, player=player, turn=self.__turn));
+                    self.__gameHistory.append(GameAction(action='draw', piece=n, player=player, turn=self.__turn));
                 return True;
             if len(self.__pieces)==0:
                 return False;
@@ -197,9 +197,9 @@ class GameState():
 
 
 class GameAction():
-    def __init__(self, action=None, pieces=None, player=None, turn=None, end=None):
+    def __init__(self, action=None, piece=None, player=None, turn=None, end=None):
         self.action=action;
-        self.pieces=pieces;
+        self.piece=piece;
         self.player=player;
         self.turn=turn;
         self.end=end;

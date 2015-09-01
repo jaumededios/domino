@@ -23,14 +23,23 @@ class RG:
 
 p1=RG()
 p2=RG()
-gh = interactor.GameHandler({'1': p1, '2': p2})
+gh = interactor.GameHandler({1: p1, 2: p2})
 a=gh.start();
 
 st=time.time();
-for i in range(10000):
-	gh.restart()
-	if not i % 100:
-		print i/100;
+
+def cleaner(game):
+	played=[ k.piece.end()  if k.end==1 else k.piece.start() for k in game['history'] if k.action=='play'];
+	played+=[-1]*(28-len(played))
+	end=[                   k.end                         for k in game['history'] if k.action=='play'];
+	end+=[-1]*(28-len(end))
+	drawn=[0]*28;
+	for k in game['history']:
+		if k.action=='draw':
+			drawn[k.turn]=k.piece
+	return [played, end, drawn, game['winner']];
+
+data=[cleaner(gh.restart()) for i in range(100)]
 
 ed=time.time();
 
